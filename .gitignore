@@ -1,0 +1,52 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env
+
+# Jupyter Notebook checkpoints & cache
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# macOS and OS junk
+.DS_Store
+Thumbs.db
+
+# Datasets and Large Binary Files (Exceeds GitHub 100MB limit)
+*.tsv
+*.parquet
+*.parquet.part
+*.part
+*.pkl
+*.pickle
+*.npy
+*.npz
+*.h5
+*.pt
+*.pth
+*.bin
+*.model
+*.zip
+*.tar.gz
+
+# Data Directories & Outputs
+dataset/
+student_resource/dataset/
+output/
+data/
+amazon_ml_challenge/
+
+# Drive and Swap files
+swapfile
+drive/
+.content/
