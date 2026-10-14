@@ -14,7 +14,7 @@ def numbers_match(a: str, b: str) -> float:
 
 def compute_pair_features(s1_row, cand_row) -> dict:
     """
-    Extract 18+ pairwise syntactic, fuzzy, and structural similarity features.
+    Extract 17 pairwise syntactic, fuzzy, and structural similarity features.
     """
     n1, n2   = s1_row['clean_name_core'], cand_row['clean_name_core']
     nf1, nf2 = s1_row['clean_name'], cand_row['clean_name']

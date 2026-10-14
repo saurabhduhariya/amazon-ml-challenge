@@ -71,7 +71,7 @@ def train_lightgbm(X_train, y_train, X_val, y_val, params=None):
     return model
 
 def predict_ensemble(xgb_model, lgb_model, X_df):
-    """Predict calibrated probabilities via equal-weight model blending."""
+    """Predict match probabilities by averaging the XGBoost and LightGBM outputs (equal weights)."""
     dmat = xgb.DMatrix(X_df)
     p_xgb = xgb_model.predict(dmat)
     p_lgb = lgb_model.predict(X_df)

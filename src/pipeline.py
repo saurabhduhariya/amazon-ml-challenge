@@ -79,7 +79,7 @@ def run_pipeline(train_mode=True, sample_size=30000):
     print(f"  Validation Blocking Recall Ceiling: {blocking_stats['recall']*100:.2f}% | Avg Candidates/Entity: {blocking_stats['avg_cands']:.1f}")
 
     # 5. Feature Engineering & Model Training
-    print("\n[5/5] Extracting 18+ Pairwise Similarity Features & Mining Hard Negatives...")
+    print("\n[5/5] Extracting 17 Pairwise Similarity Features & Mining Hard Negatives...")
     cands_train_tfidf = tfidf_blocking(s1_train_sample, s23, top_k=TFIDF_TOP_K, min_sim=TFIDF_MIN_SIM)
     cands_train_rule  = rule_based_blocking(s1_train_sample, s23, min_shared_tokens=RULE_MIN_TOKENS)
     cands_train_merged = merge_blocking_channels(cands_train_tfidf, cands_train_rule)
@@ -93,7 +93,10 @@ def run_pipeline(train_mode=True, sample_size=30000):
     lgb_model = train_lightgbm(X_train, y_train, X_val, y_val)
 
     val_probs = predict_ensemble(xgb_model, lgb_model, X_val)
-    best_thresh, best_f05, results = optimize_threshold(val_probs, pairs_val, val_gt_dict)
+    # Score only the entities we actually predicted for. Using the full validation
+    # dict would count every unscored entity as a miss and understate F0.5.
+    val_gt_sample = {k: val_gt_dict[k] for k in val_sample_ids if k in val_gt_dict}
+    best_thresh, best_f05, results = optimize_threshold(val_probs, pairs_val, val_gt_sample)
 
     print("\n" + "=" * 70)
     print(f"🏆 EVALUATION COMPLETE: Optimal Macro F_0.5 = {best_f05:.4f} at Decision Threshold {best_thresh:.2f}")
